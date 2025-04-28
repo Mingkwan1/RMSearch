@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 # Set the URL for your Runpod Serverless API endpoint
-RUNPOD_URL = "https://api.runpod.ai/v2/obhiuyqj2cpkhy/run"  # Replace YOUR_RUNPOD_ID
+RUNPOD_URL = f"{os.getenv('RUNPOD_URL')}"  # Replace YOUR_RUNPOD_ID
 RUNPOD_ENDPOINT_ID = "obhiuyqj2cpkhy"
 # Serve index.html on root
 @app.get("/", response_class=HTMLResponse)
