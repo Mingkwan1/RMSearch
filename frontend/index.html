@@ -1,0 +1,110 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat with AI</title>
+  <link rel="stylesheet" href="frontend/style.css">
+</head>
+<body>
+  <h1>Chat with AI</h1>
+    <div id="chat-box" class="chat-box"></div>
+
+    <input type="text" id="query" placeholder="Type your question..." />
+    <button onclick="sendQuery()">Send</button>
+  <script src="frontend/script.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e2e2e2;
+            min-height: 100px;
+            position: relative;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 40%;
+            left: 45%;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chat with AI</h1>
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Ask me something..." required />
+        <button type="submit">Send</button>
+    </form>
+
+    <div id="response-container" class="response"></div>
+
+    <script>
+        const form = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const responseContainer = document.getElementById('response-container');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const prompt = userInput.value;
+            
+            // Show loading spinner
+            responseContainer.innerHTML = `<div class="spinner"></div>`;
+
+            // Send request to FastAPI /ask endpoint
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt }),
+            });
+
+            const data = await response.json();
+            
+            if (!data.answer) {
+                // Handle all error cases
+                const errorMsg = data.error || 
+                            data.exception || 
+                            "No answer received from the AI";
+                console.error("API Error:", data);
+                responseContainer.innerHTML = `<strong>Error:</strong> ${errorMsg}`;
+            } else {
+                // Successful response
+                responseContainer.innerHTML = `
+                <div><strong>User:</strong> ${prompt}</div>
+                <strong>AI says:</strong> ${data.answer}
+                `;
+            }
+            userInput.value = '';  // Clear the input field after sending the prompt
+        };
+    </script>
+
+</body>
+</html>

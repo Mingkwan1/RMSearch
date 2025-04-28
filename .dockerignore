@@ -1,0 +1,11 @@
+.env
+env
+*.pyc
+*.log
+venv/
+.venv
+.gitignore
+.models
+model
+example
+example.ipynb
