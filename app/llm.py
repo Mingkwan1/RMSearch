@@ -1,5 +1,5 @@
-from app.rmsearch.rmsearch import Search
-from app.model_loader import confirm_model_downloaded
+from rmsearch.rmsearch import Search
+from model_loader import confirm_model_downloaded
 
 model_dir = confirm_model_downloaded()
 

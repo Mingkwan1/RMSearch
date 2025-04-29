@@ -1,6 +1,6 @@
 import runpod, logging
-from app.rmsearch.rmsearch import Search
-from app.model_loader import confirm_model_downloaded
+from rmsearch.rmsearch import Search
+from model_loader import confirm_model_downloaded
 
 # Setup logging
 logging.basicConfig(
