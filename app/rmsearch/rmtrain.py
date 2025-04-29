@@ -64,7 +64,7 @@ class RMTrainer:
                 **kwargs,
             }
             ...
-        ]
+        ] 
         """
         
         dataset1 = Dataset.from_list(json_data)
