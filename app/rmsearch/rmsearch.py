@@ -78,8 +78,8 @@ class Search:
             self.engine_args = AsyncEngineArgs(
                 model = model_name,
                 dtype="bfloat16",
-                tensor_parallel_size = tensor_parallel_size,
-                pipeline_parallel_size = pipeline_parallel_size,
+                tensor_parallel_size = 1, #I changed here one line
+                pipeline_parallel_size = 1, # and here another
                 distributed_executor_backend = "mp",
                 gpu_memory_utilization=0.95,
                 task="embed",
