@@ -282,7 +282,7 @@ class Search:
         return relevance
 
     async def process(self, prompt, request_id):
-
+        reward = None
         if self.model_unsupported:
             results_generator = self.engine.encode(prompt, 
                                         PoolingParams(), 
@@ -311,12 +311,8 @@ class Search:
         else:
             pass # for now
         #Make default value for reward
-        if reward:
-            reward = reward
-        else: 
-            reward = None
-
-        return reward
+        if reward is not None:
+            return reward
         
     
     
