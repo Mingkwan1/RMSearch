@@ -308,11 +308,16 @@ class Search:
             print(torch.tensor(embedding).unsqueeze(0).shape)
             print(self.score.to(embedding.device).transpose(0,1).shape)
             reward = torch.matmul(torch.tensor(embedding).unsqueeze(0), self.score.to(embedding.device).transpose(0,1))
-
         else:
             pass # for now
-        
+        #Make default value for reward
+        if reward:
+            reward = reward
+        else: 
+            reward = None
+
         return reward
+        
     
     
         
