@@ -78,8 +78,8 @@ class Search:
             self.engine_args = AsyncEngineArgs(
                 model = model_name,
                 dtype="bfloat16",
-                tensor_parallel_size = 1, #I changed here one line
-                pipeline_parallel_size = 1, # and here another
+                tensor_parallel_size = tensor_parallel_size, #I changed here one line
+                pipeline_parallel_size = pipeline_parallel_size, # and here another
                 distributed_executor_backend = "mp",
                 gpu_memory_utilization=0.95,
                 task="embed",
@@ -282,7 +282,7 @@ class Search:
         return relevance
 
     async def process(self, prompt, request_id):
-        reward = None
+
         if self.model_unsupported:
             results_generator = self.engine.encode(prompt, 
                                         PoolingParams(), 
@@ -309,10 +309,13 @@ class Search:
             print(self.score.to(embedding.device).transpose(0,1).shape)
             reward = torch.matmul(torch.tensor(embedding).unsqueeze(0), self.score.to(embedding.device).transpose(0,1))
         else:
-            pass # for now
-        #Make default value for reward
-        if reward is not None:
-            return reward
+            reward = torch.ones(1,1) # for now
+        return reward
+        # #Make default value for reward
+        # if reward is not None:
+        #     reward = reward
+        # else:
+        #     reward = torch.ones(1,1) # for now
         
     
     

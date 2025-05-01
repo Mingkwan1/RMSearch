@@ -4,7 +4,7 @@ trl==0.14.0
 peft
 pandas
 matplotlib
-vllm
+vllm # Latest version
 evaluate
 sentence_transformers
 runpod

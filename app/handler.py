@@ -17,7 +17,7 @@ model_dir = confirm_model_downloaded()
 
 search = Search(model_name = model_dir,
         tensor_parallel_size = 1,
-        pipeline_parallel_size = 2,)
+        pipeline_parallel_size = 1,) #change it to 1
 
 async def get_answer(queries, keys):
     output = await search(queries, keys)
